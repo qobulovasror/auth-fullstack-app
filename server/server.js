@@ -5,6 +5,7 @@ import DotEnv from 'dotenv'
 //import packages from files
 import db from "./model/db.js";
 import Routes from "./routes/index.js";
+import logger from './middlewares/loggerMiddleware.js';
 
 //configure .env file
 DotEnv.config()
@@ -24,6 +25,7 @@ async function server() {
     });
 
     app.get("/", (req, res) => {
+      console.log(req.headers['x-forwarded-for'] || req.connection.remoteAddress)
       res.json({
         "Project name": "Auth app for test",
         version: "1.0.0^development",
@@ -34,6 +36,7 @@ async function server() {
     Routes(app);
 
   } catch (error) {
+    logger.error(error);
     // if something wrong in the server it logs an error
     console.log(`SERVER ERROR: ${error}`);
   }

@@ -3,9 +3,14 @@ import Joi from "joi";
 export default class UserValidator {
   static async AddUserValidator(data) {
     return Joi.object({
-      name: Joi.string().required(),
+      name: Joi.string().required().min(2).max(150),
+      email: Joi.string()
+        .pattern(new RegExp(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/))
+        .required()
+        .min(4)
+        .max(120)
+        .error(new Error("email is invalid!")),
       password: Joi.string().required().min(6),
-      email: Joi.string().required().min(4).max(100),
       role: Joi.string().default("user"),
     }).validateAsync(data);
   }
@@ -21,12 +26,13 @@ export default class UserValidator {
 
   static async AuthUserValidator(data) {
     return Joi.object({
-      username: Joi.string()
-        .pattern(new RegExp(/^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/))
+        email: Joi.string()
+        .pattern(new RegExp(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/))
         .required()
-        .error(new Error("Username is invalid!")),
-      password: Joi.string().required().min(6),
-      email: Joi.string().required().min(4).max(100),
+        .min(4)
+        .max(120)
+        .error(new Error("email is invalid!")),
+      password: Joi.string().required().min(6)
     }).validateAsync(data);
   }
 }

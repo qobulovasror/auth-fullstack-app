@@ -1,13 +1,17 @@
 import { Router } from "express";
 import UserController from "../controller/userController.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
+import roleMiddleware from "../middlewares/roleMiddleware.js";
 
 const UserRouter = Router();
-UserRouter.get("/", UserController.GetUsers);
+UserRouter.get("/", [authMiddleware, roleMiddleware], UserController.GetUsers);
 
-UserRouter.get("/:id", UserController.GetUserById);
+UserRouter.get("/:id", [authMiddleware], UserController.GetUserById);
 
-UserRouter.post("/", UserController.AddUser);
+UserRouter.post("/", [authMiddleware], UserController.AddUser);
 
-UserRouter.put("/:id", UserController.UpdateUser);
+UserRouter.put("/:id", [authMiddleware], UserController.UpdateUser);
+
+UserRouter.delete("/:id", [authMiddleware, roleMiddleware], UserController.DeleteUser);
 
 export {UserRouter};

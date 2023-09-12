@@ -1,0 +1,12 @@
+{"_original":{"email":"qobulovasror0@gmail.com","password":"123456"},"details":[{"context":{"key":"name","label":"name"},"message":"\"name\" is required","path":["name"],"type":"any.required"}],"level":"error"}
+{"code":401,"level":"error"}
+{"code":401,"level":"error"}
+{"code":401,"level":"error"}
+{"code":404,"level":"error"}
+{"code":401,"level":"error"}
+{"code":401,"level":"error"}
+{"code":401,"level":"error"}
+{"code":403,"level":"error"}
+{"code":403,"level":"error"}
+{"code":403,"level":"error"}
+{"code":403,"level":"error"}
