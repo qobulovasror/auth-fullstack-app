@@ -1,6 +1,7 @@
 //import packages from node_modules
 import Express from 'express'
 import DotEnv from 'dotenv'
+import cors from 'cors'
 
 //import packages from files
 import db from "./model/db.js";
@@ -19,6 +20,8 @@ async function server() {
   try {
     //connnect db
     await db();
+
+    app.use(cors())
 
     app.listen(PORT, () => {
       console.log(`Server is running: http://localhost:${PORT}`);
