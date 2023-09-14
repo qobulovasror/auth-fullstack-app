@@ -10,3 +10,7 @@
 {"code":403,"level":"error"}
 {"code":403,"level":"error"}
 {"code":403,"level":"error"}
+{"code":404,"level":"error"}
+{"code":403,"level":"error"}
+{"code":401,"level":"error"}
+{"level":"error"}

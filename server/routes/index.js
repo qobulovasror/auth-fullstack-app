@@ -13,8 +13,8 @@ export default function Routes(app) {
   app.use(CustomErrorMiddleware);
 
   //app routes
-  app.use('/api/user', UserRouter)
   app.use('/api/auth', Auth)
+  app.use('/api/user', UserRouter)
 
   //use route error handler
   app.use(errorHandlerMiddleware);
