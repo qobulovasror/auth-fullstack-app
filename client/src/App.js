@@ -10,7 +10,12 @@ const Regis = lazy(() => import("./Pages/Auth/Regis"));
 const Reset = lazy(() => import("./Pages/Auth/Reset"));
 
 function App() {
-  const [user, setUser] = useState(window.localStorage.getItem("user-auth"));
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    role: "",
+  });
+  const [token, setToken] = useState(window.localStorage.getItem("user-auth")) 
   return (
     <Suspense fallback={<>Loading</>}>
       <ToastContainer/>
@@ -18,24 +23,24 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={user ? <Home /> : <Navigate to="/login" replace />}
+            element={token ? <Home user={user} setUser={setUser} setToken={setToken}/> : <Navigate to="/login" replace />}
           />
           <Route
             path="/login"
             element={
-              !user ? <Login setUser={setUser} /> : <Navigate to="/" replace />
+              !token ? <Login setToken={setToken} setUser={setUser} /> : <Navigate to="/" replace />
             }
           />
           <Route
             path="/regis"
             element={
-              !user ? <Regis setUser={setUser} /> : <Navigate to="/" replace />
+              !token ? <Regis setToken={setToken} setUser={setUser} /> : <Navigate to="/" replace />
             }
           />
           <Route
             path="/reset"
             element={
-              !user ? <Reset setUser={setUser} /> : <Navigate to="/" replace />
+              !token ? <Reset setToken={setToken} setUser={setUser} /> : <Navigate to="/" replace />
             }
           />
         </Routes>

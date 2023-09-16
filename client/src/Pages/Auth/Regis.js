@@ -1,17 +1,21 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import {hindConfPass, hindEmail, hindPass} from "../../validator/emailValidator";
-import { Navigate } from "react-router-dom";
+import {
+  hindConfPass,
+  hindEmail,
+  hindPass,
+} from "../../validator/emailValidator";
 import { toast } from "react-toastify";
 
 const Regis = (props) => {
-  const { setUser } = props;
+  const { setUser, setToken } = props;
   const [errTxt, setErrTxt] = useState({
     email: [],
     password: [],
     confPass: [],
   });
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
     confPassword: "",
@@ -26,17 +30,55 @@ const Regis = (props) => {
       setErrTxt({ ...errTxt, password: hindPass(e.target.value) });
     }
     if (e.target.name === "confPassword") {
-      setErrTxt({ ...errTxt, confPass: hindConfPass(e.target.value, formData.password) });
+      setErrTxt({
+        ...errTxt,
+        confPass: hindConfPass(e.target.value, formData.password),
+      });
     }
   };
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    if(!(errTxt.email.length===0 && errTxt.password.length===0 && errTxt.confPass.length===0)){
-      if(errTxt.email) toast.error(errTxt.email[0])
-      if(errTxt.password) toast.error(errTxt.password[0]) 
-      if(errTxt.confPass) toast.error(errTxt.confPass[0]) 
+    if (
+      !(
+        errTxt.email.length === 0 &&
+        errTxt.password.length === 0 &&
+        errTxt.confPass.length === 0
+      )
+    ) {
+      if (errTxt.email) toast.error(errTxt.email[0]);
+      if (errTxt.password) toast.error(errTxt.password[0]);
+      if (errTxt.confPass) toast.error(errTxt.confPass[0]);
+      return;
     }
-    console.log(formData);
+    if (formData.name.length < 3) return toast.error("Your name is invalid");
+    try {
+      const respons = await fetch('http://localhost:5000/api/user', {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email.toLowerCase(),
+          password: formData.password,
+        })
+      })
+      respons.json().then(res=>{
+        console.log(res);
+        if(res.ok===false){
+          console.log("err: ",res);
+          toast.error(res.message)
+          return;
+        }
+        setUser({name: res.name, email: res.email, role: res.role})
+        setToken(res['x-auth-token'])
+        window.localStorage.setItem('user-auth', res['x-auth-token'])
+      })
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -48,6 +90,20 @@ const Regis = (props) => {
             <div className="card p-4">
               <h2 className="text-center">Sign Up</h2>
               <form onSubmit={(e) => submitHandler(e)}>
+                <div className="mb-3">
+                  <label htmlFor="name" className="form-label">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control bg-light"
+                    placeholder="Enter your name"
+                    id="name"
+                    name="name"
+                    onChange={changeHandler}
+                    value={formData.name}
+                  />
+                </div>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
                     Email address

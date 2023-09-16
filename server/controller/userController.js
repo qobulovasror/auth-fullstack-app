@@ -45,7 +45,8 @@ export default class UserController {
       user.password = hashPassword;
       await user.save();
       const token = user.generateAuthToken();
-      res.header({ "x-auth-token": token }).status(201).json(user);
+      // res.header({ "x-auth-token": token }).status(201).json({email: user.email, name: user.name, role: user.role});
+      res.status(201).json({email: user.email, name: user.name, role: user.role, "x-auth-token": token});
     } catch (error) {
       next(error);
     }

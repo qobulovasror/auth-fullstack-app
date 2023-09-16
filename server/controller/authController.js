@@ -12,10 +12,11 @@ export default async function authController(req, res, next) {
     if(!isValidPwt)
         throw new res.error(404, "username or password incorrect");
     const token = user.generateAuthToken();
-    res.header({"x-auth-token": token}).json({
+    res.json({
         name: user.name,
         email: user.email,
         role: user.role,
+        'x-auth-token': token
     });
   } catch (error) {
     next(error);

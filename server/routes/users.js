@@ -89,7 +89,7 @@ UserRouter.get("/:id", [authMiddleware], UserController.GetUserById);
 
 /**
  * @swagger
- * /api/user/{id}:
+ * /api/user:
  *   post:
  *     summary: Add user
  *     parameters:
@@ -135,7 +135,7 @@ UserRouter.get("/:id", [authMiddleware], UserController.GetUserById);
  *                          description: The user's role
  *                          example: user
  */
-UserRouter.post("/", [authMiddleware], UserController.AddUser);
+UserRouter.post("/", UserController.AddUser);
 
 /**
  * @swagger

@@ -14,3 +14,24 @@
 {"code":403,"level":"error"}
 {"code":401,"level":"error"}
 {"level":"error"}
+{"code":401,"level":"error"}
+{"code":401,"level":"error"}
+{"code":401,"level":"error"}
+{"_original":{},"details":[{"context":{"key":"name","label":"name"},"message":"\"name\" is required","path":["name"],"type":"any.required"}],"level":"error"}
+{"code":400,"level":"error"}
+{"code":400,"level":"error"}
+{"code":401,"level":"error"}
+{"code":400,"level":"error"}
+{"_original":{},"details":[{"context":{"key":"name","label":"name"},"message":"\"name\" is required","path":["name"],"type":"any.required"}],"level":"error"}
+{"code":400,"level":"error"}
+{"code":400,"level":"error"}
+{"code":400,"level":"error"}
+{"code":400,"level":"error"}
+{"code":400,"level":"error"}
+{"code":400,"level":"error"}
+{"code":400,"level":"error"}
+{"code":400,"level":"error"}
+{"level":"error"}
+{"_original":{"email":"qobulovasror2@gmail.com","password":""},"details":[{"context":{"key":"password","label":"password","value":""},"message":"\"password\" is not allowed to be empty","path":["password"],"type":"string.empty"}],"level":"error"}
+{"level":"error"}
+{"level":"error"}
