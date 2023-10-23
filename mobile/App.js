@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from "react";
+import MainContainer from "./src/MainConatiner";
+import Auth from "./src/Auth/Auth";
+import {createTokenTable, getToken} from './services/tokenServer';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+function App() {
+  
+  const [token, setToken] = useState('');
+
+  useEffect(()=>{
+    if (!token) {
+      createTokenTable()
+      getToken("authToken")
+        .then((data) => {
+          setToken(data);
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  }, [])
+  
+  return token ? (
+    <MainContainer setToken={setToken} token={token} />
+  ) : (
+    <Auth setToken={setToken} token={token} />
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
